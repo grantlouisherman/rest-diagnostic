@@ -1,10 +1,10 @@
 import React from 'react'
 
-const ItemToDiagnose = () => (
+const ItemToDiagnose = (props) => (
   <div className='fetchItem'>
     <div>
       <label for='url'> url </label>
-      <input id='url '/>
+      <input onChange={event => ( props.addUrlPath(props.id, event.target.value))} id='url '/>
     </div>
     <div>
       <label for='headers'> headers </label>

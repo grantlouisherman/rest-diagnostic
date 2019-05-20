@@ -8,9 +8,10 @@ export const shouldConstructFetchRequest = (method, headers, body, url) => (
   .then(response => response.json())
 )
 
-export const createCallAPIStrucutre = () => ({
-  id: 0,
+export const createCallAPIStrucutre = id => ({
+  id,
   headers: {},
   url: '',
-  body: ''
+  body: '',
+  method: 'GET'
 })
