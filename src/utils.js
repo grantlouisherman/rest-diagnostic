@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce'
 export const shouldConstructFetchRequest = (method, headers, body, url) => (
   fetch(url, {
     method,
@@ -15,3 +16,5 @@ export const createCallAPIStrucutre = id => ({
   body: '',
   method: 'GET'
 })
+
+export const debounceFuncWrapper = fn => debounce(fn, 1000)

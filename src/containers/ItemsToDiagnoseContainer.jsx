@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css';
 import ItemToDiagnose from '../components/ItemToDiagnose'
+import { debounceFuncWrapper } from '../utils.js'
 
 class ItemsToDiagnoseContainer extends Component {
   render(){
@@ -12,7 +13,7 @@ class ItemsToDiagnoseContainer extends Component {
           <ItemToDiagnose
             key={this.props.apiCalls[apiCallKey].id}
             id={this.props.apiCalls[apiCallKey].id}
-            addUrlPath={this.props.addUrlPath}
+            addUrlPath={debounceFuncWrapper(this.props.addUrlPath)}
             />
         )) : null
       }
