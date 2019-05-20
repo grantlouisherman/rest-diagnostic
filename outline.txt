@@ -1,0 +1,51 @@
+/*
+API_CALL {
+  headers: {
+    key: value
+  },
+  url: string,
+  body: string
+}
+
+
+
+
+*/
+<DiagnosticContainer>
+  localState = {
+    API_CALLS: []
+  }
+  .map(itemsToDiagnose => {
+    <ItemsToDiagnose />
+  })
+  <Add Button Componenet={} >// Add new Item
+  <RunDiagnostics API_CALLS={this.state.API_CALLS} />
+<DiagnosticContainer>
+
+
+<RunDiagnostics>
+<Button /> => {
+  Promise.all(RunDiagnostics)
+  .then( health of call )
+}
+</RunDiagnostics>
+
+<ItemsToDiagnose>
+  <div>
+   .flexbox {
+      // url
+      <Headers />
+      // type <select /> GET, POST, PUT
+      // ?Post shouldShow Body
+      /*
+        health of call => updates if there was a call
+      */
+      // Button to Delete This instance
+   }
+  </div>
+</ItemsToDiagnose>
+
+<Headers>
+  <input/>
+  <Add Button>
+<Headers />
