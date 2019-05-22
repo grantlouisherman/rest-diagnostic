@@ -12,12 +12,14 @@ class ItemsToDiagnoseContainer extends Component {
         apiCallKeys ? apiCallKeys.map(apiCallKey => (
           <ItemToDiagnose
             key={this.props.apiCalls[apiCallKey].id}
-            id={this.props.apiCalls[apiCallKey].id}
+            data={this.props.apiCalls[apiCallKey]}
             addUrlPath={debounceFuncWrapper(this.props.addUrlPath)}
+            updateFetchBody={debounceFuncWrapper(this.props.updateFetchBody)}
+            addHeader={debounceFuncWrapper(this.props.addHeader)}
             />
         )) : null
       }
-      <button onClick={this.props.addNewApiCall}>Add API CALL</button>
+      <button onClick={this.props.runCallDiagnostic}>Diagnose Calls</button>
       </div>
     )
   }
