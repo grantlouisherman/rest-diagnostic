@@ -9,7 +9,9 @@ class DiagnosticContainer extends Component {
       API_CALLS: {},
       idCounter: 0,
       fileReader : new FileReader(),
-      uploadedFile: false
+      uploadedFile: false,
+      diagnosedCalls: {},
+      showDiagnosedCallsView: false
     }
   }
 
@@ -34,13 +36,24 @@ class DiagnosticContainer extends Component {
 
   addHeader = (key, headerBody) => {
     const { API_CALLS } = this.state
+    console.log(key, headerBody)
     const stringifiedBody = JSON.stringify(headerBody)
     API_CALLS[key].headers = stringifiedBody
     this.setState({API_CALLS})
   }
 
   runCallDiagnostic = () => {
-   console.log(DiagnoseCalls(this.state.API_CALLS))
+   DiagnoseCalls(this.state.API_CALLS)
+   .then( diagnosedCalls => {
+    let diagnosedCallsObject = {}
+    diagnosedCalls.forEach((call, idx) => {
+      diagnosedCallsObject[idx] = call
+     })     
+    this.setState({
+      diagnosedCalls: diagnosedCallsObject, 
+      showDiagnosedCallsView: true 
+    })
+   })
   }
 
   handleFileLoad = e => {
@@ -61,6 +74,11 @@ class DiagnosticContainer extends Component {
   }
 
   render() {
+    if(this.state.showDiagnosedCallsView){
+      return(
+        <textarea name="" value={JSON.stringify(this.state.diagnosedCalls,undefined, 4)} cols="30" rows="10"/>
+      )
+    }
     return (
       <div>
       {

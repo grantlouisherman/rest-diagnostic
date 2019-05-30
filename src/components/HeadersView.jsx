@@ -1,6 +1,13 @@
 import React from 'react'
 
+import HeaderValues from './HeaderValues'
+
 const HeadersView = headers => {
+    let headerKeys
+    if(headers){
+      headerKeys = Object.keys(headers)
+    }
+    console.log( headers , headerKeys )
     return (
         <table>
         <tr>
@@ -8,15 +15,20 @@ const HeadersView = headers => {
           <th>Value</th>
         </tr>
         <tr>
-        {
-            headers ? headers.map(header => {
-                <label></label>
-                <input></input>
-            }) : null
-        }
+            {
+              headerKeys && headerKeys.length > 0 ? 
+              headerKeys.map(headerKey => <HeaderValues key={headerKey} value={headerKey} />)
+              : null
+            }
         </tr>
-        </table>
-       
+          <tr>
+          {
+            headerKeys && headerKeys.length > 0 ? 
+            headerKeys.map(headerKey => <HeaderValues key={headerKey} value={headers} />)
+            : null
+            }
+          </tr>
+        </table>    
     )
 }
 

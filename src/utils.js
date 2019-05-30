@@ -1,12 +1,28 @@
 import debounce from 'lodash/debounce'
-export const shouldConstructFetchRequest = (method, headers, body, url) => (
-  fetch(url, {
-    method,
-    mode: 'cors',
-    headers
+
+const deconstructResponseArray = responseArr => {
+  let deconstructedResponseArray = {}
+  responseArr.forEach(responseObj => {
+    deconstructedResponseArray = Object.assign({}, deconstructedResponseArray, responseObj )
   })
-  .then(response => response.json())
-)
+  return deconstructedResponseArray
+}
+
+export const shouldConstructFetchRequest = (method, headers, fetchBody, url) => {
+  // const body = method === 'POST' ? fetchBody : null
+  return (
+      fetch(url, {
+      method,
+      mode: 'cors',
+      headers,
+    })
+    .then(response => response.json()
+    .then(data => ({
+      status: response.status,
+      responseBody: deconstructResponseArray(data)
+    })))
+  )
+}
 
 export const createCallAPIStrucutre = id => ({
   id,
@@ -26,7 +42,5 @@ export const DiagnoseCalls = calls => {
     callStack.push(shouldConstructFetchRequest(method, headers, body, url))
   })
   return Promise.all(callStack)
-  .then(calls => {
-    console.log(calls)
-  })
+  .then(calls => calls )
 }

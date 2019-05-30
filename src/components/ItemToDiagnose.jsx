@@ -1,6 +1,7 @@
 import React from 'react'
 
 import MethodSelectTag from './MethodSelectTag'
+import HeadersView  from './HeadersView'
 
 const ItemToDiagnose = (props) => (
   <div className='fetchItem'>
@@ -14,7 +15,8 @@ const ItemToDiagnose = (props) => (
     </div>
     <div>
       <label for='headers'> headers </label>
-      <textarea value={props.data.headers ? JSON.stringify(props.data.headers) : "{}"}/>
+      <textarea value={ JSON.stringify(props.data.headers) }/>
+      {/* <HeadersView {...props.data.headers} /> */}
     </div>
     <div>
       <label for='method'> method </label>
