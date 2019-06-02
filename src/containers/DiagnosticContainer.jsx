@@ -76,7 +76,7 @@ class DiagnosticContainer extends Component {
   render() {
     if(this.state.showDiagnosedCallsView){
       return(
-        <textarea name="" value={JSON.stringify(this.state.diagnosedCalls,undefined, 4)} cols="30" rows="10"/>
+        <textarea value={JSON.stringify(this.state.diagnosedCalls,undefined, 4)} cols="50" rows="25" />
       )
     }
     return (
