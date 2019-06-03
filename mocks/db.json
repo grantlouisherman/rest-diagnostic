@@ -13,7 +13,9 @@
       "postId": 1
     },
     {
-      "id": 2
+      "id": 2,
+      "body": "some other comment",
+      "postId": 2
     }
   ],
   "profile": {

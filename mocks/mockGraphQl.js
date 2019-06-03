@@ -8,37 +8,32 @@ const typeDefs = gql`
       title: String
       author: String
   }
-  type Posts {
-    posts: [Post]
-  }
+
   type Comment {
       id: Int
       body: String
       postId:Int
   }
-  type Comments {
-      comments: [Comment]
-  }
+
   type Profile {
       name: String
   }
 
   type Query {
       profile: Profile
-      comments: Comments
-      posts: Posts
+      comments: [Comment]
+      posts: [Post]
   }
 `;
 
-// A map of functions which return data for the schema.
 const resolvers = {
   Query: {
     profile: () => (axios.get('http://localhost:3000/profile')
-    .then(res => res)),
+    .then(res => res.data)),
     comments: () => (axios.get('http://localhost:3000/comments')
-    .then(res => res)),
+    .then(res => res.data)),
     posts: () => (axios.get('http://localhost:3000/posts')
-    .then(res => res)),  
+    .then(res => res.data)),  
   }
 };
 

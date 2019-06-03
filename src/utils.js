@@ -9,12 +9,13 @@ const deconstructResponseArray = responseArr => {
 }
 
 export const shouldConstructFetchRequest = (method, headers, fetchBody, url) => {
-  // const body = method === 'POST' ? fetchBody : null
+  const body = method === 'POST' ? fetchBody : null
   return (
       fetch(url, {
       method,
       mode: 'cors',
       headers,
+      body,
     })
     .then(response => response.json()
     .then(data => ({
