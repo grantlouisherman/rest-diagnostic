@@ -42,19 +42,12 @@ class DiagnosticContainer extends Component {
     this.setState({API_CALLS})
   }
 
-  runCallDiagnostic = () => {
-   DiagnoseCalls(this.state.API_CALLS)
-   .then( diagnosedCalls => {
-     console.log(diagnosedCalls)
-    let diagnosedCallsObject = {}
-    diagnosedCalls.forEach((call, idx) => {
-      diagnosedCallsObject[idx] = call
-     })     
-    this.setState({
-      diagnosedCalls: diagnosedCallsObject, 
-      showDiagnosedCallsView: true 
-    })
-   })
+  runCallDiagnostic = async () => {
+   const diagnosedCalls = await DiagnoseCalls(this.state.API_CALLS)
+   this.setState({
+    diagnosedCalls: { ...diagnosedCalls }, 
+    showDiagnosedCallsView: true 
+  })
   }
 
   handleFileLoad = e => {
@@ -74,10 +67,23 @@ class DiagnosticContainer extends Component {
     this.state.fileReader.readAsText(event.target.files[0])
   }
 
+  showFileUpload = e => {
+    this.setState({
+      showDiagnosedCallsView: false,
+      uploadedFile: false,
+      diagnosedCalls: {},
+      API_CALLS: {}
+    })
+  }
+
   render() {
     if(this.state.showDiagnosedCallsView){
       return(
+        <div>
         <textarea value={JSON.stringify(this.state.diagnosedCalls,undefined, 4)} cols="50" rows="25" />
+        <button onClick={this.showFileUpload}>Reset</button>
+        </div>
+
       )
     }
     return (

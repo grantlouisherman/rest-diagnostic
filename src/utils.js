@@ -1,8 +1,11 @@
 import debounce from 'lodash/debounce'
 
-const deconstructResponseArray = responseArr => {
+const deconstructResponse = fetchResponse => {
+  if(!Array.isArray(fetchResponse)){
+    return fetchResponse
+  }
   let deconstructedResponseArray = {}
-  responseArr.forEach(responseObj => {
+  fetchResponse.forEach(responseObj => {
     deconstructedResponseArray = Object.assign({}, deconstructedResponseArray, responseObj )
   })
   return deconstructedResponseArray
@@ -18,8 +21,7 @@ export const shouldConstructFetchRequest = async (method, headers, query, url) =
   }
   const fetchRequest = await fetch(url, options)
   const fetchRequestJson = await fetchRequest.json()
-  const responseBody = Array.isArray(fetchRequestJson) ? 
-  deconstructResponseArray(fetchRequestJson) : fetchRequestJson
+  const responseBody = deconstructResponse(fetchRequestJson)
   return {
       status: fetchRequest.status,
       responseBody
