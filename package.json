@@ -13,8 +13,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "mock:server": "json-server --watch ./mocks/db.json --port 3000",
-    "mock:graphql:server": "nodemon ./mocks/mockGraphQl.js"
+    "mock:server": "json-server --watch ./mocks/db.json --port 8080",
+    "mock:graphql:server": "nodemon ./mocks/mockGraphQl.js",
+    "db": "npm run mock:server",
+    "graph": "npm run mock:graphql:server"
   },
   "eslintConfig": {
     "extends": "react-app"

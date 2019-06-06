@@ -28,11 +28,11 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    profile: () => (axios.get('http://localhost:3000/profile')
+    profile: () => (axios.get('http://localhost:8080/profile')
     .then(res => res.data)),
-    comments: () => (axios.get('http://localhost:3000/comments')
+    comments: () => (axios.get('http://localhost:8080/comments')
     .then(res => res.data)),
-    posts: () => (axios.get('http://localhost:3000/posts')
+    posts: () => (axios.get('http://localhost:8080/posts')
     .then(res => res.data)),  
   }
 };

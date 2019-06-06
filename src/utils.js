@@ -8,21 +8,23 @@ const deconstructResponseArray = responseArr => {
   return deconstructedResponseArray
 }
 
-export const shouldConstructFetchRequest = (method, headers, fetchBody, url) => {
-  const body = method === 'POST' ? fetchBody : null
-  return (
-      fetch(url, {
-      method,
-      mode: 'cors',
-      headers,
-      body,
-    })
-    .then(response => response.json()
-    .then(data => ({
-      status: response.status,
-      responseBody: deconstructResponseArray(data)
-    })))
-  )
+export const shouldConstructFetchRequest = async (method, headers, query, url) => {
+  const body = method === 'POST' ? JSON.stringify({ query }) : null
+  const options = {
+    method,
+    mode: 'cors',
+    headers,
+    body
+  }
+  const fetchRequest = await fetch(url, options)
+  const fetchRequestJson = await fetchRequest.json()
+  const responseBody = Array.isArray(fetchRequestJson) ? 
+  deconstructResponseArray(fetchRequestJson) : fetchRequestJson
+  return {
+      status: fetchRequest.status,
+      responseBody
+    }
+
 }
 
 export const createCallAPIStrucutre = id => ({
@@ -44,4 +46,5 @@ export const DiagnoseCalls = calls => {
   })
   return Promise.all(callStack)
   .then(calls => calls )
+  .catch(console.error)
 }

@@ -1,0 +1,14 @@
+{
+	"calls":[
+		{
+		  "headers": {
+            "Content-Type": "application/json"
+          },
+		  "url": "http://localhost:4000",
+      "body": "query { comments { id } }",
+		  "method": "POST"
+		}
+	]
+
+
+}

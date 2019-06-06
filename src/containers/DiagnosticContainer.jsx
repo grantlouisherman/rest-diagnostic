@@ -45,6 +45,7 @@ class DiagnosticContainer extends Component {
   runCallDiagnostic = () => {
    DiagnoseCalls(this.state.API_CALLS)
    .then( diagnosedCalls => {
+     console.log(diagnosedCalls)
     let diagnosedCallsObject = {}
     diagnosedCalls.forEach((call, idx) => {
       diagnosedCallsObject[idx] = call
