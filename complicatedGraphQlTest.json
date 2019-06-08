@@ -1,0 +1,13 @@
+{
+	"calls":[
+		{
+		  "headers": {
+				"Content-Type": "application/json",
+				"cardname": "corporate-platinum"
+      },
+		  "url": "https://e2qrewards.americanexpress.com/orchestration/",
+      "body": "query { benefitsContent { benefitIdsExcludingBlacklist(locale:'en_us',environment:'e2qglobal2', cardname:'corporate-platinum', loggedin:false) } }",
+		  "method": "POST"
+		}
+	]
+}
