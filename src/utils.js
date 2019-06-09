@@ -1,4 +1,5 @@
 import debounce from 'lodash/debounce'
+import yaml from 'js-yaml'
 
 const deconstructResponse = fetchResponse => {
   if(!Array.isArray(fetchResponse)){
@@ -50,3 +51,5 @@ export const DiagnoseCalls = calls => {
   .then(calls => calls )
   .catch(console.error)
 }
+
+export const loadYaml = file => yaml.load(file)

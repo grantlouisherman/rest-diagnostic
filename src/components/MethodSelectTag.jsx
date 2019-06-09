@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 
-const MethodSelectTag = (data) => {
+const MethodSelectTag = props => {
   useEffect(() => {
-    document.getElementById(data.data || 'GET').selected = true
+    document.getElementById(`${props.method}-${props.index}` || `GET-${props.index}`).selected = true
   });
     return (
     <select id='method'>
-      <option id='GET'>GET</option>
-      <option id='POST'>POST</option>
-      <option id='PUT'>PUT</option>
+      <option id={`GET-${props.index}`}>GET</option>
+      <option id={`POST-${props.index}`}>POST</option>
+      <option id={`PUT-${props.index}`}>PUT</option>
     </select>
     )
 }

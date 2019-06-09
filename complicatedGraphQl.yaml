@@ -1,0 +1,12 @@
+---
+calls:
+  - headers: !!map {"Content-Type": "application/json"}
+    "url": "http://localhost:4000"
+    "body": "
+      query { 
+        benefitsContent { 
+          benefitIdsExcludingBlacklist(locale:'en_us',environment:'e2qglobal2', cardname:'corporate-platinum', loggedin:false) 
+          } 
+        }
+    "
+    "method": "POST"

@@ -9,9 +9,10 @@ class ItemsToDiagnoseContainer extends Component {
     return (
       <div>
       {
-        apiCallKeys ? apiCallKeys.map(apiCallKey => (
+        apiCallKeys ? apiCallKeys.map((apiCallKey, idx) => (
           <ItemToDiagnose
-            key={this.props.apiCalls[apiCallKey].id}
+            key={idx}
+            index={idx}
             data={this.props.apiCalls[apiCallKey]}
             addUrlPath={debounceFuncWrapper(this.props.addUrlPath)}
             updateFetchBody={debounceFuncWrapper(this.props.updateFetchBody)}

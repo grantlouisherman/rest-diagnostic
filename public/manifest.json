@@ -1,6 +1,6 @@
 {
   "short_name": "React App",
-  "name": "React Extension",
+  "name": "Rest Diagnostic Tool",
   "manifest_version": 2,
   "browser_action": {
     "default_popup": "index.html",

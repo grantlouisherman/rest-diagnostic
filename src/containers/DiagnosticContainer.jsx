@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ItemsToDiagnoseContainer from './ItemsToDiagnoseContainer'
-import {createCallAPIStrucutre, DiagnoseCalls} from '../utils.js'
+import {createCallAPIStrucutre, DiagnoseCalls, loadYaml } from '../utils.js'
 
 class DiagnosticContainer extends Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class DiagnosticContainer extends Component {
 
   handleFileLoad = e => {
     const content = this.state.fileReader.result
-    const parsedJSON = JSON.parse(content)
+    const parsedJSON = loadYaml(content)
     const { API_CALLS } = this.state
     let { idCounter } = this.state
     parsedJSON.calls.forEach(call => {

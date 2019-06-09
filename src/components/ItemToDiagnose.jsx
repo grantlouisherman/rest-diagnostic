@@ -9,7 +9,7 @@ const ItemToDiagnose = (props) => (
       <label for='url'> url </label>
       <input
         onChange={event => ( props.addUrlPath(props.id, event.target.value))}
-        id='url'
+        id={`url-${props.index}`}
         value={props.data.url ? props.data.url : ""}
         />
     </div>
@@ -20,13 +20,13 @@ const ItemToDiagnose = (props) => (
     </div>
     <div>
       <label for='method'> method </label>
-      <MethodSelectTag data={props.data.method} />
+      <MethodSelectTag method={props.data.method} index={props.index}/>
     </div>
     <div>
       <label for='body'> body </label>
       <input
         onChange={event => ( props.updateFetchBody(props.id, event.target.value))}
-        id='body'
+        id={`body-${props.index}`}
         value={props.data.body ? props.data.body : ""}
         />
     </div>
