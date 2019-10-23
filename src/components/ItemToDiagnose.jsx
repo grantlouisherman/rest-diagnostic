@@ -1,36 +1,50 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import MethodSelectTag from './MethodSelectTag'
 import HeadersView  from './HeadersView'
+import { updateFetchBody } from '../reducers/diagnostic'
 
-const ItemToDiagnose = (props) => (
-  <div className='fetchItem'>
+const ItemToDiagnose = (props) => {
+  const currentItem = props.diagnosticItems[props.id]
+  console.log(props)
+  console.log(currentItem)
+  return (
+    <div className='fetchItem'>
     <div>
       <label for='url'> url </label>
       <input
         onChange={event => ( props.addUrlPath(props.id, event.target.value))}
         id={`url-${props.index}`}
-        value={props.data.url ? props.data.url : ""}
+        value={currentItem.url ? currentItem.url : ""}
         />
     </div>
     <div>
       <label for='headers'> headers </label>
-      <textarea value={ JSON.stringify(props.data.headers) }/>
-      {/* <HeadersView {...props.data.headers} /> */}
+      <textarea value={ JSON.stringify(currentItem.headers) }/>
+      {/* <HeadersView {...currentItem.headers} /> */}
     </div>
     <div>
       <label for='method'> method </label>
-      <MethodSelectTag method={props.data.method} index={props.index}/>
+      <MethodSelectTag method={currentItem.method} index={props.index}/>
     </div>
     <div>
       <label for='body'> body </label>
       <input
-        onChange={event => ( props.updateFetchBody(props.id, event.target.value))}
+        onChange={event => ( props.updateFetchBody(props.index, event.target.value))}
         id={`body-${props.index}`}
-        value={props.data.body ? props.data.body : ""}
+        value={currentItem.body ? currentItem.body : ""}
         />
     </div>
   </div>
-)
+  )  
+}
 
-export default ItemToDiagnose
+const mapStateToProps = state => {
+  const { diagnostic } = state
+  console.log(state)
+  return {
+    diagnosticItems: diagnostic
+  }
+}
+export default connect(mapStateToProps, { updateFetchBody })(ItemToDiagnose)

@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import { uploadFiled, updateFetchBody } from '../reducers/diagnostic'
+
 import ItemsToDiagnoseContainer from './ItemsToDiagnoseContainer'
-import {createCallAPIStrucutre, DiagnoseCalls, loadYaml } from '../utils.js'
+import { createCallAPIStrucutre, DiagnoseCalls, loadYaml } from '../utils.js'
 
 class DiagnosticContainer extends Component {
   constructor(props) {
@@ -28,15 +31,8 @@ class DiagnosticContainer extends Component {
     this.setState({API_CALLS})
   }
 
-  updateFetchBody = (key, value ) => {
-    const { API_CALLS } = this.state
-    API_CALLS[key].body = value
-    this.setState({API_CALLS})
-  }
-
   addHeader = (key, headerBody) => {
     const { API_CALLS } = this.state
-    console.log(key, headerBody)
     const stringifiedBody = JSON.stringify(headerBody)
     API_CALLS[key].headers = stringifiedBody
     this.setState({API_CALLS})
@@ -50,20 +46,8 @@ class DiagnosticContainer extends Component {
   })
   }
 
-  handleFileLoad = e => {
-    const content = this.state.fileReader.result
-    const parsedJSON = loadYaml(content)
-    const { API_CALLS } = this.state
-    let { idCounter } = this.state
-    parsedJSON.calls.forEach(call => {
-      call.id = idCounter
-      API_CALLS[idCounter] = call
-      idCounter++
-    })
-    this.setState({API_CALLS:API_CALLS, idCounter:idCounter, uploadedFile: true})
-  }
   fileUpload = (event) => {
-    this.state.fileReader.onloadend = this.handleFileLoad
+    this.state.fileReader.onloadend = (evt) => ( this.props.uploadFiled(this.state.fileReader) )
     this.state.fileReader.readAsText(event.target.files[0])
   }
 
@@ -89,9 +73,9 @@ class DiagnosticContainer extends Component {
     return (
       <div>
       {
-        this.state.uploadedFile ?
+        Object.keys(this.props.diagnosticContent).length ?
         <ItemsToDiagnoseContainer
-          apiCalls={this.state.API_CALLS}
+          apiCalls={this.props.diagnosticContent}
           addNewApiCall={this.addNewApiCall}
           addUrlPath={this.addUrlPath}
           updateFetchBody={this.updateFetchBody}
@@ -105,4 +89,10 @@ class DiagnosticContainer extends Component {
   }
 }
 
-export default DiagnosticContainer
+const mapStateToProps = state => {
+  const { diagnostic } = state
+  return {
+    diagnosticContent: diagnostic
+  }
+}
+export default connect(mapStateToProps, { uploadFiled, updateFetchBody })(DiagnosticContainer)
