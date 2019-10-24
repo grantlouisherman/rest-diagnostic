@@ -2,20 +2,17 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { uploadFiled, updateFetchBody } from '../reducers/diagnostic'
 
-import ItemsToDiagnoseContainer from './ItemsToDiagnoseContainer'
-import { createCallAPIStrucutre, DiagnoseCalls, loadYaml } from '../utils.js'
+import ItemToDiagnose from '../components/ItemToDiagnose'
+import { createCallAPIStrucutre, DiagnoseCalls, debounceFuncWrapper } from '../utils.js'
 
 class DiagnosticContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      API_CALLS: {},
-      idCounter: 0,
-      fileReader : new FileReader(),
-      uploadedFile: false,
-      diagnosedCalls: {},
-      showDiagnosedCallsView: false
-    }
+  state = {
+    API_CALLS: {},
+    idCounter: 0,
+    fileReader : new FileReader(),
+    uploadedFile: false,
+    diagnosedCalls: {},
+    showDiagnosedCallsView: false
   }
 
   addNewApiCall = () => {
@@ -61,6 +58,7 @@ class DiagnosticContainer extends Component {
   }
 
   render() {
+    console.log(this.props.diagnosticContent)
     if(this.state.showDiagnosedCallsView){
       return(
         <div>
@@ -71,17 +69,19 @@ class DiagnosticContainer extends Component {
       )
     }
     return (
+      
       <div>
       {
         Object.keys(this.props.diagnosticContent).length ?
-        <ItemsToDiagnoseContainer
-          apiCalls={this.props.diagnosticContent}
-          addNewApiCall={this.addNewApiCall}
-          addUrlPath={this.addUrlPath}
-          updateFetchBody={this.updateFetchBody}
-          addHeader={this.addHeader}
-          runCallDiagnostic={this.runCallDiagnostic}
-        /> :
+        Object.keys(this.props.diagnosticContent).map((apiCallKey, idx) => (
+          <ItemToDiagnose
+            key={idx}
+            index={apiCallKey}
+            addUrlPath={debounceFuncWrapper(this.addUrlPath)}
+            addHeader={debounceFuncWrapper(this.addHeader)}
+          />
+        ))     
+        :
         <input id="the-file-input" type="file" onChange={this.fileUpload}/>
       }
       </div>

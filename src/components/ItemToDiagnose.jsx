@@ -4,11 +4,15 @@ import { connect } from 'react-redux'
 import MethodSelectTag from './MethodSelectTag'
 import HeadersView  from './HeadersView'
 import { updateFetchBody } from '../reducers/diagnostic'
+import debounce from 'lodash/debounce'
+import { debounceFuncWrapper } from '../utils.js'
 
 const ItemToDiagnose = (props) => {
-  const currentItem = props.diagnosticItems[props.id]
-  console.log(props)
-  console.log(currentItem)
+  const currentItem = props.diagnosticItems[props.index]
+  const { updateFetchBody } = props
+  const onChangeFetchBody = event => {
+    updateFetchBody(props.index, event.target.value)
+  }
   return (
     <div className='fetchItem'>
     <div>
@@ -16,24 +20,24 @@ const ItemToDiagnose = (props) => {
       <input
         onChange={event => ( props.addUrlPath(props.id, event.target.value))}
         id={`url-${props.index}`}
-        value={currentItem.url ? currentItem.url : ""}
+        value={currentItem && currentItem.url ? currentItem.url : ""}
         />
     </div>
     <div>
       <label for='headers'> headers </label>
-      <textarea value={ JSON.stringify(currentItem.headers) }/>
+      <textarea value={ currentItem && currentItem.header ? JSON.stringify(currentItem.headers) : '' }/>
       {/* <HeadersView {...currentItem.headers} /> */}
     </div>
-    <div>
+    {/* <div>
       <label for='method'> method </label>
-      <MethodSelectTag method={currentItem.method} index={props.index}/>
-    </div>
+      <MethodSelectTag method={currentItem && currentItem.method} index={props.index}/>
+    </div> */}
     <div>
       <label for='body'> body </label>
       <input
-        onChange={event => ( props.updateFetchBody(props.index, event.target.value))}
+        onChange={onChangeFetchBody}
         id={`body-${props.index}`}
-        value={currentItem.body ? currentItem.body : ""}
+        value={currentItem && currentItem.body ? currentItem.body : ""}
         />
     </div>
   </div>
@@ -42,7 +46,6 @@ const ItemToDiagnose = (props) => {
 
 const mapStateToProps = state => {
   const { diagnostic } = state
-  console.log(state)
   return {
     diagnosticItems: diagnostic
   }

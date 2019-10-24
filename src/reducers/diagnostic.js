@@ -38,7 +38,9 @@ const diagnosticReducer = (state={}, action) => {
             const { key, value } = action.payload
             const itemWithUpdatedFetchBody = state[key]
             itemWithUpdatedFetchBody.body = value
-            return Object.assign({}, state, itemWithUpdatedFetchBody)
+            const newStateWithUpdatedData = state
+            newStateWithUpdatedData[key] = itemWithUpdatedFetchBody
+            return Object.assign({}, state, newStateWithUpdatedData)
             
         default:
             return state

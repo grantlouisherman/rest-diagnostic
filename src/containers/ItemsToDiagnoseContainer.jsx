@@ -6,7 +6,6 @@ import { debounceFuncWrapper } from '../utils.js'
 class ItemsToDiagnoseContainer extends Component {
   render(){
     const apiCallKeys = Object.keys(this.props.apiCalls)
-    console.log(this.props.apiCalls)
     return (
       <div>
       {
@@ -14,7 +13,6 @@ class ItemsToDiagnoseContainer extends Component {
           <ItemToDiagnose
             key={idx}
             index={idx}
-            id={this.props.apiCalls[apiCallKey].id}
             addUrlPath={debounceFuncWrapper(this.props.addUrlPath)}
             addHeader={debounceFuncWrapper(this.props.addHeader)}
             />
