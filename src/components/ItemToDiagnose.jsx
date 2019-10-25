@@ -2,23 +2,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import MethodSelectTag from './MethodSelectTag'
-import HeadersView  from './HeadersView'
 import { updateFetchBody } from '../reducers/diagnostic'
-import debounce from 'lodash/debounce'
-import { debounceFuncWrapper } from '../utils.js'
 
 const ItemToDiagnose = (props) => {
   const currentItem = props.diagnosticItems[props.index]
   const { updateFetchBody } = props
   const onChangeFetchBody = event => {
-    updateFetchBody(props.index, event.target.value)
+    const keyToUpdate = event.target.id.split('-')[0]
+    updateFetchBody(props.index, event.target.value, keyToUpdate)
   }
   return (
     <div className='fetchItem'>
     <div>
       <label for='url'> url </label>
       <input
-        onChange={event => ( props.addUrlPath(props.id, event.target.value))}
+        onChange={onChangeFetchBody}
         id={`url-${props.index}`}
         value={currentItem && currentItem.url ? currentItem.url : ""}
         />
@@ -28,10 +26,10 @@ const ItemToDiagnose = (props) => {
       <textarea value={ currentItem && currentItem.header ? JSON.stringify(currentItem.headers) : '' }/>
       {/* <HeadersView {...currentItem.headers} /> */}
     </div>
-    {/* <div>
+    <div>
       <label for='method'> method </label>
       <MethodSelectTag method={currentItem && currentItem.method} index={props.index}/>
-    </div> */}
+    </div>
     <div>
       <label for='body'> body </label>
       <input

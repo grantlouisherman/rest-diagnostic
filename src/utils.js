@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce'
 import yaml from 'js-yaml'
 
 const deconstructResponse = fetchResponse => {
@@ -37,8 +36,6 @@ export const createCallAPIStrucutre = id => ({
   body: '',
   method: 'GET'
 })
-
-export const debounceFuncWrapper = fn => debounce(fn, 1000)
 
 export const DiagnoseCalls = calls => {
   const callStack = []

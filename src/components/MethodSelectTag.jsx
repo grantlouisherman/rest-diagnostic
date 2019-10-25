@@ -2,13 +2,15 @@ import React, { useEffect } from 'react'
 
 const MethodSelectTag = props => {
   useEffect(() => {
-    document.getElementById(`${props.method}-${props.index}` || `GET-${props.index}`).selected = true
-  });
+    const selectedFetchMethod = `method-${props.index}-${props.method}` || `method-${props.index}-GET`
+    document.querySelector(`#${selectedFetchMethod}`).selected = true
+  },[props.method, props.index]);
+
     return (
     <select id='method'>
-      <option id={`GET-${props.index}`}>GET</option>
-      <option id={`POST-${props.index}`}>POST</option>
-      <option id={`PUT-${props.index}`}>PUT</option>
+      <option id={`method-${props.index}-GET`}>GET</option>
+      <option id={`method-${props.index}-POST`}>POST</option>
+      <option id={`method-${props.index}-PUT`}>PUT</option>
     </select>
     )
 }

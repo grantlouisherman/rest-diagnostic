@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { uploadFiled, updateFetchBody } from '../reducers/diagnostic'
 
 import ItemToDiagnose from '../components/ItemToDiagnose'
-import { createCallAPIStrucutre, DiagnoseCalls, debounceFuncWrapper } from '../utils.js'
+import { createCallAPIStrucutre, DiagnoseCalls } from '../utils.js'
 
 class DiagnosticContainer extends Component {
   state = {
@@ -20,12 +20,6 @@ class DiagnosticContainer extends Component {
     API_CALLS[idCounter] = createCallAPIStrucutre(idCounter)
     let newIdCount = idCounter + 1
     this.setState({API_CALLS:API_CALLS, idCounter:newIdCount})
-  }
-
-  addUrlPath = (key, value ) => {
-    const { API_CALLS } = this.state
-    API_CALLS[key].url = value
-    this.setState({API_CALLS})
   }
 
   addHeader = (key, headerBody) => {
@@ -58,7 +52,6 @@ class DiagnosticContainer extends Component {
   }
 
   render() {
-    console.log(this.props.diagnosticContent)
     if(this.state.showDiagnosedCallsView){
       return(
         <div>
@@ -77,13 +70,14 @@ class DiagnosticContainer extends Component {
           <ItemToDiagnose
             key={idx}
             index={apiCallKey}
-            addUrlPath={debounceFuncWrapper(this.addUrlPath)}
-            addHeader={debounceFuncWrapper(this.addHeader)}
+            addHeader={this.addHeader}
           />
         ))     
         :
         <input id="the-file-input" type="file" onChange={this.fileUpload}/>
       }
+      { Object.keys(this.props.diagnosticContent).length ? 
+      <button onClick={this.props.runCallDiagnostic}>Diagnose Calls</button> : null }
       </div>
     )
   }

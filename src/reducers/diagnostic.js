@@ -12,12 +12,13 @@ export const uploadFiled = (readFileContent) => {
     }
 }
 
-export const updateFetchBody = (key, value) => {
+export const updateFetchBody = (itemKey, value, objectKey) => {
     return {
         type: UPDATE_DIAGNOSTIC_BODY,
         payload: {
-            key,
-            value
+            itemKey,
+            value,
+            objectKey
         }
     }
 }
@@ -35,11 +36,11 @@ const diagnosticReducer = (state={}, action) => {
               return Object.assign({}, state, API_CALLS)
 
         case UPDATE_DIAGNOSTIC_BODY:
-            const { key, value } = action.payload
-            const itemWithUpdatedFetchBody = state[key]
-            itemWithUpdatedFetchBody.body = value
+            const { itemKey, value, objectKey } = action.payload
+            const itemWithUpdatedFetchBody = state[itemKey]
+            itemWithUpdatedFetchBody[objectKey] = value
             const newStateWithUpdatedData = state
-            newStateWithUpdatedData[key] = itemWithUpdatedFetchBody
+            newStateWithUpdatedData[itemKey] = itemWithUpdatedFetchBody
             return Object.assign({}, state, newStateWithUpdatedData)
             
         default:
