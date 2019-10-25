@@ -7,7 +7,7 @@ const MethodSelectTag = props => {
   },[props.method, props.index]);
 
     return (
-    <select id='method'>
+    <select id='method' onChange={props.onChangeFetchBody} className="ui selection dropdown" >
       <option id={`method-${props.index}-GET`}>GET</option>
       <option id={`method-${props.index}-POST`}>POST</option>
       <option id={`method-${props.index}-PUT`}>PUT</option>
