@@ -21,8 +21,16 @@ code {
   border: black;
   margin: 10px;
   padding: 10px;
+  width:100%;
 }
 
 .space-internal {
   margin:10px;
+}
+
+styled-text-area {
+  width: 600px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 5px;
 }

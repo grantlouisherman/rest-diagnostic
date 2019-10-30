@@ -8,6 +8,7 @@ import { DiagnoseCalls } from '../utils.js'
 const DiagnosticContainer = props => {
   const [isDiagnosedCallView, setDiagnosedCallView] = useState(false)
   const [diagnosedCalls, setDiagnosedCalls] = useState({})
+  const [isDiagnosticContentLoaded, setDiagnosticContentLoaded] = useState(false)
   
   const runCallDiagnostic = async () => {
     const diagnosedCalls = await DiagnoseCalls(props.diagnosticContent)
@@ -19,10 +20,12 @@ const DiagnosticContainer = props => {
     const fileReader = new FileReader()
     fileReader.onloadend = (evt) => ( props.uploadFiled(fileReader) )
     fileReader.readAsText(event.target.files[0])
+    setDiagnosticContentLoaded(true)
   }
 
   const showFileUpload = e => {
     setDiagnosedCallView(false)
+    setDiagnosticContentLoaded(false)
   }
 
     if(isDiagnosedCallView){
@@ -38,12 +41,14 @@ const DiagnosticContainer = props => {
       
       <div>
       {
-        Object.keys(props.diagnosticContent).length ?
+        isDiagnosticContentLoaded ?
         Object.keys(props.diagnosticContent).map((apiCallKey, idx) => (
-          <ItemToDiagnose
-            key={idx}
-            index={apiCallKey}
-          />
+          <div className="">
+            <ItemToDiagnose
+              key={idx}
+              index={apiCallKey}
+            />
+          </div>
         ))     
         :
         <div className="ui placeholder segment">
@@ -56,10 +61,13 @@ const DiagnosticContainer = props => {
               </div>
         </div>
       }
-      { Object.keys(props.diagnosticContent).length ? 
+      { isDiagnosticContentLoaded ? 
       <div>
-      <button onClick={runCallDiagnostic} className="ui primary button">
-        Diagnose Calls</button> 
+      <button 
+        onClick={runCallDiagnostic} 
+        className="ui primary button">
+          Diagnose Calls
+          </button> 
         <button onClick={showFileUpload}>Reset</button>
       </div>
         : null }
