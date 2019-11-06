@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { uploadFiled, updateFetchBody } from '../reducers/diagnostic'
+import { uploadFiled, updateFetchBody, diagnosticHandler } from '../reducers/diagnostic'
 
 import ItemToDiagnose from '../components/ItemToDiagnose'
-import { DiagnoseCalls } from '../utils.js'
 
 const DiagnosticContainer = props => {
   const [isDiagnosedCallView, setDiagnosedCallView] = useState(false)
   const [diagnosedCalls, setDiagnosedCalls] = useState({})
   const [isDiagnosticContentLoaded, setDiagnosticContentLoaded] = useState(false)
-  
+
   const runCallDiagnostic = async () => {
-    const diagnosedCalls = await DiagnoseCalls(props.diagnosticContent)
+    await props.diagnosticHandler(props.diagnosticContent)
     setDiagnosedCallView(true)
     setDiagnosedCalls({ ...diagnosedCalls })
   }
@@ -28,28 +27,29 @@ const DiagnosticContainer = props => {
     setDiagnosticContentLoaded(false)
   }
 
-    if(isDiagnosedCallView){
-      return(
-        <div className="ui placeholder segment">
-        <textarea value={JSON.stringify(diagnosedCalls,undefined, 4)} cols="50" rows="25" />
-        <button onClick={showFileUpload}>Reset</button>
-        </div>
-
-      )
-    }
+    // if(isDiagnosedCallView){
+    //   return(
+    //     <div className="ui placeholder segment">
+    //     <textarea value={JSON.stringify(diagnosedCalls,undefined, 4)} cols="50" rows="25" />
+    //     <button onClick={showFileUpload}>Reset</button>
+    //     </div>
+    //
+    //   )
+    // }
     return (
-      
+
       <div>
       {
         isDiagnosticContentLoaded ?
         Object.keys(props.diagnosticContent).map((apiCallKey, idx) => (
           <div className="">
             <ItemToDiagnose
-              key={idx}
+              key={`idx-${setDiagnosedCallView}`}
               index={apiCallKey}
+              isDiagnosedCallView={isDiagnosedCallView}
             />
           </div>
-        ))     
+        ))
         :
         <div className="ui placeholder segment">
             <div class="ui icon header">
@@ -61,20 +61,20 @@ const DiagnosticContainer = props => {
               </div>
         </div>
       }
-      { isDiagnosticContentLoaded ? 
+      { isDiagnosticContentLoaded ?
       <div>
-      <button 
-        onClick={runCallDiagnostic} 
+      <button
+        onClick={runCallDiagnostic}
         className="ui primary button">
           Diagnose Calls
-          </button> 
+          </button>
         <button onClick={showFileUpload}>Reset</button>
       </div>
         : null }
       </div>
     )
   }
-  
+
 
 const mapStateToProps = state => {
   const { diagnostic } = state
@@ -82,4 +82,4 @@ const mapStateToProps = state => {
     diagnosticContent: diagnostic
   }
 }
-export default connect(mapStateToProps, { uploadFiled, updateFetchBody })(DiagnosticContainer)
+export default connect(mapStateToProps, { uploadFiled, updateFetchBody, diagnosticHandler })(DiagnosticContainer)

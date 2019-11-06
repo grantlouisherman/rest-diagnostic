@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import MethodSelectTag from './MethodSelectTag'
 import { updateFetchBody } from '../reducers/diagnostic'
+import Icon from "./Icon";
 
 const ItemToDiagnose = (props) => {
   const currentItem = props.diagnosticItems[props.index]
@@ -25,9 +26,9 @@ const ItemToDiagnose = (props) => {
     </div>
     <div className="space-internal">
       <label for='headers' className="ui horizontal label"> headers </label>
-      <textarea 
+      <textarea
         className="styled-text-area"
-        id={`headers-${props.index}`} 
+        id={`headers-${props.index}`}
         disabled={true}
         value={ currentItem && currentItem.headers ? JSON.stringify(currentItem.headers) : '' }
       />
@@ -35,8 +36,8 @@ const ItemToDiagnose = (props) => {
     </div>
     <div className="space-internal">
       <label for='method' className="ui horizontal label"> method </label>
-      <MethodSelectTag 
-        method={currentItem && currentItem.method} 
+      <MethodSelectTag
+        method={currentItem && currentItem.method}
         index={props.index}
         onChangeFetchBody={onChangeFetchBody}
         />
@@ -51,8 +52,12 @@ const ItemToDiagnose = (props) => {
         />
       </div>
     </div>
+      <div className="space-internal">
+        <label className="ui horizontal label"> status of call </label>
+        <Icon responseStaus={currentItem.status} />
+      </div>
   </div>
-  )  
+  )
 }
 
 const mapStateToProps = state => {

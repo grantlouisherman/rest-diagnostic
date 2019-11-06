@@ -11,7 +11,7 @@ const deconstructResponse = fetchResponse => {
   return deconstructedResponseArray
 }
 
-export const shouldConstructFetchRequest = async (method, headers, query, url) => {
+export const shouldConstructFetchRequest = async (method, headers, query, url, callId) => {
   const body = method === 'POST' ? JSON.stringify({ query }) : null
   const options = {
     method,
@@ -24,7 +24,8 @@ export const shouldConstructFetchRequest = async (method, headers, query, url) =
   const responseBody = deconstructResponse(fetchRequestJson)
   return {
       status: fetchRequest.status,
-      responseBody
+      responseBody,
+      callId
     }
 
 }
@@ -41,8 +42,8 @@ export const DiagnoseCalls = calls => {
   const callStack = []
   const callStackKeys = Object.keys(calls).map(callKey => calls[callKey])
   callStackKeys.forEach( callStackKey => {
-    const { method, headers, body, url } = callStackKey
-    callStack.push(shouldConstructFetchRequest(method, headers, body, url))
+    const { method, headers, body, url, id } = callStackKey
+    callStack.push(shouldConstructFetchRequest(method, headers, body, url, id))
   })
   return Promise.all(callStack)
   .then(calls => calls )
