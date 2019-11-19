@@ -30,14 +30,6 @@ export const shouldConstructFetchRequest = async (method, headers, query, url, c
 
 }
 
-export const createCallAPIStrucutre = id => ({
-  id,
-  headers: {},
-  url: '',
-  body: '',
-  method: 'GET'
-})
-
 export const DiagnoseCalls = calls => {
   const callStack = []
   const callStackKeys = Object.keys(calls).map(callKey => calls[callKey])

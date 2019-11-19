@@ -27,22 +27,13 @@ const DiagnosticContainer = props => {
     setDiagnosticContentLoaded(false)
   }
 
-    // if(isDiagnosedCallView){
-    //   return(
-    //     <div className="ui placeholder segment">
-    //     <textarea value={JSON.stringify(diagnosedCalls,undefined, 4)} cols="50" rows="25" />
-    //     <button onClick={showFileUpload}>Reset</button>
-    //     </div>
-    //
-    //   )
-    // }
     return (
 
       <div>
       {
         isDiagnosticContentLoaded ?
         Object.keys(props.diagnosticContent).map((apiCallKey, idx) => (
-          <div className="">
+          <div className="ui grid">
             <ItemToDiagnose
               key={`idx-${setDiagnosedCallView}`}
               index={apiCallKey}
@@ -62,13 +53,17 @@ const DiagnosticContainer = props => {
         </div>
       }
       { isDiagnosticContentLoaded ?
-      <div>
+      <div className="btn-container">
       <button
         onClick={runCallDiagnostic}
         className="ui primary button">
           Diagnose Calls
           </button>
-        <button onClick={showFileUpload}>Reset</button>
+        <button 
+          onClick={showFileUpload}
+          className="ui primary button">
+            Reset
+          </button>
       </div>
         : null }
       </div>

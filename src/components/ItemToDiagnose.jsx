@@ -13,7 +13,7 @@ const ItemToDiagnose = (props) => {
     updateFetchBody(props.index, event.target.value, keyToUpdate)
   }
   return (
-    <div className='fetchItem'>
+    <div className='fetchItem for wide column'>
     <div className="space-internal">
       <label for='url' className="ui horizontal label"> url </label>
       <div class="ui input">

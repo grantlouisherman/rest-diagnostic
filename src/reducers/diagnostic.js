@@ -47,10 +47,7 @@ export const diagnosticHandler = (callsArray) => {
     return (dispatch) => {
         DiagnoseCalls(callsArray)
             .then(finishedCalls => dispatch(diagnosCalls(finishedCalls)))
-            .catch(err => {
-                console.log(err)
-                return dispatch(problemWithDiagnosingCalls(err))
-            })
+            .catch(err => dispatch(problemWithDiagnosingCalls(err)))
     }
 }
 
