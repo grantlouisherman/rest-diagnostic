@@ -30,9 +30,8 @@ const ItemToDiagnose = (props) => {
         className="styled-text-area"
         id={`headers-${props.index}`}
         disabled={true}
-        value={ currentItem && currentItem.headers ? JSON.stringify(currentItem.headers) : '' }
+        value={ currentItem && currentItem.headers ? JSON.stringify(currentItem.headers, null, 4) : '' }
       />
-      {/* <HeadersView {...currentItem.headers} /> */}
     </div>
     <div className="space-internal">
       <label for='method' className="ui horizontal label"> method </label>
