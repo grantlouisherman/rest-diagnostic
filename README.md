@@ -3,6 +3,7 @@
 - Files for things if they are too long. For example queries or header item
 - Typescript upgrade
 - Code clean up in general
+- Add documentation how to run locally with chrome extension
 
 
 
