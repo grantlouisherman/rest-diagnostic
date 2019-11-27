@@ -1,3 +1,11 @@
+### Items to add:
+- Error boundary
+- Files for things if they are too long. For example queries or header item
+- Typescript upgrade
+- Code clean up in general
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
