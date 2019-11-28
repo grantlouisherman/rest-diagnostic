@@ -23,7 +23,7 @@ export const shouldConstructFetchRequest = async (
   url: string, 
   callId: number): Promise<ConstrcutedFetchRequest> => {
 
-  const body: string = method === 'POST' ? JSON.stringify({ query }) : null
+  const body: string | null = method === 'POST' ? JSON.stringify({ query }) : null
   const options: Object = {
     method,
     mode: 'cors',
@@ -41,9 +41,9 @@ export const shouldConstructFetchRequest = async (
 
 }
 
-export const DiagnoseCalls = (calls: Object): Promise<any> => {
-  const callStack = []
-  const callStackKeys: Array<any> = Object.keys(calls).map(callKey => calls[callKey])
+export const DiagnoseCalls = (calls: any): Promise<any> => {
+  const callStack: Array<any> = []
+  const callStackKeys: Array<any> = Object.keys(calls).map((callKey:string)=> calls[callKey])
   callStackKeys.forEach( callStackKey => {
     const { method, headers, body, url, id } = callStackKey
     callStack.push(shouldConstructFetchRequest(method, headers, body, url, id))

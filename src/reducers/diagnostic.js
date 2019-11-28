@@ -1,5 +1,4 @@
-import { loadYaml } from '../utils.js'
-import { DiagnoseCalls } from '../utils.js'
+import { DiagnoseCalls, loadYaml } from '../utils.ts'
 
 /* Actions */
 const UPLOAD_FILE = 'UPLOAD_FILE'
