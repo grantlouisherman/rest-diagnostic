@@ -96,10 +96,10 @@ const diagnosticReducer = (state: DiagnosticState | any={diagnostic:{}}, action:
                 let currentCall = callsUpdatedWithResponseInformation[callId]
                 const { status, responseBody} = action.payload[callId]
                 currentCall.status = status
+                currentCall.responseBody = responseBody
             })
             return Object.assign({}, state, callsUpdatedWithResponseInformation)
 
-            return state
         case ERROR:
             const { error, data } = action.payload
             return Object.assign({}, state, {error, data})
