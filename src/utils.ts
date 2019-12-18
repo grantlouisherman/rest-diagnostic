@@ -18,16 +18,20 @@ export interface DiagnosticPayload {
 }
 
 export interface Call {
-  id: number,
-  headers: Object,
-  url: string,
-  body: string,
-  method: string
+  id: number | any,
+  headers: Object | any,
+  url: string | any,
+  body: string | any,
+  method: string | any
 }
 
 export interface Action {
   type: string,
   payload: Object | DiagnosticPayload
+}
+
+export interface YAML {
+  calls: any
 }
 
 export interface DiagnosticState {
@@ -82,4 +86,4 @@ export const DiagnoseCalls = (calls: any): Promise<any> => {
   .catch(console.error)
 }
 
-export const loadYaml = (file: string): File => yaml.load(file)
+export const loadYaml = (file: string): Object => yaml.load(file)

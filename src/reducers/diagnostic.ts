@@ -1,3 +1,5 @@
+
+
 import { 
     DiagnoseCalls, 
     loadYaml, 
@@ -6,7 +8,8 @@ import {
     Action,
     DiagnosticState,
     DiagnosticPayload,
-    APICall
+    APICall,
+    YAML
 } from '../utils'
 
 /* Actions */
@@ -68,10 +71,11 @@ export const diagnosticHandler = (callsArray: Array<ConstructedFetchRequest> ): 
 const diagnosticReducer = (state: DiagnosticState | any={diagnostic:{}}, action: Action | any) => {
     switch(action.type){
         case UPLOAD_FILE:
-            const file = action.payload.result
-            const apisCalls: Array<Call> = loadYaml(file).calls
+            const file: string = action.payload.result 
+            const apisCalls: any = loadYaml(file)
+            const apiArray : Array<Call> = apisCalls.calls
             const API_CALLS: APICall = {}
-            apisCalls.forEach((call: Call, idx:number) => {
+            apiArray.forEach((call: Call, idx:number) => {
                 call.id = idx
                 API_CALLS[idx] = call
               })
