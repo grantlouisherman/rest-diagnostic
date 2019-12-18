@@ -1,18 +1,52 @@
 ---
 calls:
   - headers: !!map {"Content-Type": "application/json"}
-    "url": "http://localhost:4000"
-    "body": "query { 
-                  comments { 
-                    id 
-                } 
-              }"
+    "url": "https://e2qrewards.americanexpress.com/orchestration/"
+    "body": 'query {
+                  cardContent {
+                    cardWhitelist(locale:"en_us", environment:"e2qglobal"){
+                        cards
+                    }
+                }
+              }'
     "method": "POST"
   - headers: !!map {"Content-Type": "application/json"}
-    "url": "http://localhost:4000"
-    "body": "query { 
-                  comments { 
-                    id 
-                } 
-              }"
+    "url": "https://e2qrewards.americanexpress.com/orchestration/"
+    "body": 'query {
+                benefitsContent {
+                  benefitById(id: 1971) {
+                    id
+                    title
+                    alternate_title
+                    images {
+                      medium_url
+                    }
+                    call_to_action {
+                      url
+                      title
+                    }
+                  short_description
+                  }
+                }
+                layout {
+                  benefitLayout(locale: "en_us", id: 1971, cardname: "hilton-aspire") {
+                    benefitName
+                    enrollStatus {
+                      notEnrolled
+                      enrolled
+                      pending
+                    }
+                    ctaText
+                    altText
+                    learnMoreText
+                    layout {
+                      header
+                      enrollStatus
+                      description
+                      cta
+                      learnMore
+                    }
+                  }
+                }
+              }'
     "method": "POST"

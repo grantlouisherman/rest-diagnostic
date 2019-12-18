@@ -2,19 +2,10 @@
 	"calls":[
 		{
 		  "headers": {},
-		  "url": "http://localhost:8080/posts",
-		  "body": "",
-		  "method": "GET"
-		},
-		{
-			"headers": {
-				"account_token": "MOCK"
-			},
-			"url": " http://localhost:8080/comments",
-			"body": "",
-			"method": "GET"
+		  "url": "https://e2qrewards.americanexpress.com/orchestration/",
+		  "body": "query{ cardcontent { cardWhiteList(local:'en_us', enviroment:'e2qglobal') { cards }} }",
+
+		  "method": "POST"
 		}
 	]
-
-
 }

@@ -1,3 +1,12 @@
+### Items to add:
+- Error boundary
+- Files for things if they are too long. For example queries or header item
+- Typescript upgrade
+- Code clean up in general
+- Add documentation how to run locally with chrome extension
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
