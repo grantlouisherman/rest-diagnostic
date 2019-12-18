@@ -1,10 +1,39 @@
 import yaml from 'js-yaml'
 
-interface ConstrcutedFetchRequest {
+export interface ConstructedFetchRequest {
   status: number;
   responseBody: Object;
   callId: number;
 }
+
+export interface APICall {
+  [key: number]: Call
+}
+
+export interface DiagnosticPayload {
+  itemKey: string,
+  value: string,
+  objectKey: string,
+  result: string
+}
+
+export interface Call {
+  id: number,
+  headers: Object,
+  url: string,
+  body: string,
+  method: string
+}
+
+export interface Action {
+  type: string,
+  payload: Object | DiagnosticPayload
+}
+
+export interface DiagnosticState {
+  diagnostic:  Object | Array<ConstructedFetchRequest>
+}
+
 const deconstructResponse = (fetchResponse: Response): Object => {
   if(!Array.isArray(fetchResponse)){
     return fetchResponse
@@ -21,7 +50,7 @@ export const shouldConstructFetchRequest = async (
   headers: Object, 
   query: Object, 
   url: string, 
-  callId: number): Promise<ConstrcutedFetchRequest> => {
+  callId: number): Promise<ConstructedFetchRequest> => {
 
   const body: string | null = method === 'POST' ? JSON.stringify({ query }) : null
   const options: Object = {

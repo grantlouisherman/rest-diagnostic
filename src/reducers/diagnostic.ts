@@ -1,20 +1,35 @@
-import { DiagnoseCalls, loadYaml } from '../utils.ts'
+import { 
+    DiagnoseCalls, 
+    loadYaml, 
+    ConstructedFetchRequest, 
+    Call, 
+    Action,
+    DiagnosticState,
+    DiagnosticPayload,
+    APICall
+} from '../utils'
 
 /* Actions */
-const UPLOAD_FILE = 'UPLOAD_FILE'
-const UPDATE_DIAGNOSTIC_BODY = 'UPDATE_DIAGNOSTIC_BODY'
-const DIAGNOSE_CALLS = 'DIAGNOSE_CALLS'
-const ERROR = 'ERROR'
+const UPLOAD_FILE: string = 'UPLOAD_FILE'
+const UPDATE_DIAGNOSTIC_BODY: string = 'UPDATE_DIAGNOSTIC_BODY'
+const DIAGNOSE_CALLS: string = 'DIAGNOSE_CALLS'
+const ERROR: string = 'ERROR'
+
+
 
 /*  Action Creators    */
-export const uploadFiled = (readFileContent) => {
+export const uploadFiled = (readFileContent: Object): Action => {
     return {
         type: UPLOAD_FILE,
         payload: readFileContent
     }
 }
 
-export const updateFetchBody = (itemKey, value, objectKey) => {
+export const updateFetchBody = 
+(
+    itemKey: string, 
+    value: string, 
+    objectKey: string): Action => {
     return {
         type: UPDATE_DIAGNOSTIC_BODY,
         payload: {
@@ -25,14 +40,14 @@ export const updateFetchBody = (itemKey, value, objectKey) => {
     }
 }
 
-const diagnosCalls = (diagnosedCalls ) => {
+const diagnosCalls = (diagnosedCalls: Array<ConstructedFetchRequest> ):Action => {
     return {
         type: DIAGNOSE_CALLS,
         payload: diagnosedCalls
     }
 }
 
-const problemWithDiagnosingCalls = (err) => {
+const problemWithDiagnosingCalls = (err: Error): Action => {
     return {
         type: ERROR,
         payload: {
@@ -42,21 +57,21 @@ const problemWithDiagnosingCalls = (err) => {
     }
 }
 
-export const diagnosticHandler = (callsArray) => {
-    return (dispatch) => {
+export const diagnosticHandler = (callsArray: Array<ConstructedFetchRequest> ): Object => {
+    return (dispatch:any) => {
         DiagnoseCalls(callsArray)
             .then(finishedCalls => dispatch(diagnosCalls(finishedCalls)))
             .catch(err => dispatch(problemWithDiagnosingCalls(err)))
     }
 }
 
-const diagnosticReducer = (state={}, action) => {
+const diagnosticReducer = (state: DiagnosticState | any={diagnostic:{}}, action: Action | any) => {
     switch(action.type){
         case UPLOAD_FILE:
             const file = action.payload.result
-            const apisCalls = loadYaml(file).calls
-            const API_CALLS = {}
-            apisCalls.forEach((call, idx) => {
+            const apisCalls: Array<Call> = loadYaml(file).calls
+            const API_CALLS: APICall = {}
+            apisCalls.forEach((call: Call, idx:number) => {
                 call.id = idx
                 API_CALLS[idx] = call
               })
