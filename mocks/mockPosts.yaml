@@ -1,0 +1,10 @@
+---
+calls:
+  - headers: !!map {"Content-Type": "application/json"}
+    "url": "http://localhost:8080/posts"
+    "body": "{ 'payload': 'test'}"
+    "method": "POST"
+  - headers: !!map {"Content-Type": "application/json"}
+    "url": "http://localhost:8080/posts"
+    "body": "{ 'payload': 'test'}"
+    "method": "POST"
