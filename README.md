@@ -1,3 +1,8 @@
+Things to do:
+1. Better Error handling for bad files and failed calls
+2. Downloadable starter content
+3. Tests
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
