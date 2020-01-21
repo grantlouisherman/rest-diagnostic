@@ -1,11 +1,6 @@
 import React, { useLayoutEffect } from 'react'
 
 const MethodSelectTag = props => {
-  useLayoutEffect(() => {
-    const selectedFetchMethod = `method-${props.index}-${props.method}` || `method-${props.index}-GET`
-    document.querySelector(`#${selectedFetchMethod}`).selected = true
-  },[props.method, props.index]);
-
     return (
     <select
       id='method'

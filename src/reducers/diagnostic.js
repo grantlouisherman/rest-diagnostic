@@ -54,15 +54,19 @@ export const diagnosticHandler = (callsArray) => {
 const diagnosticReducer = (state={}, action) => {
     switch(action.type){
         case UPLOAD_FILE:
+            try{ 
             const file = action.payload.result
             const apisCalls = loadYaml(file).calls
             const API_CALLS = {}
-            apisCalls.forEach((call, idx) => {
-                call.id = idx
-                API_CALLS[idx] = call
-              })
-              return Object.assign({}, state, API_CALLS)
-
+            for(let apiIndex in apisCalls){
+                const currentCall = apisCalls[apiIndex]
+                currentCall.id = apiIndex
+                API_CALLS[apiIndex] = currentCall
+            }
+                return Object.assign({}, state, API_CALLS)
+            } catch(err){
+                return Object.assign({}, state, {error: true})
+            }
         case UPDATE_DIAGNOSTIC_BODY:
             const { itemKey, value, objectKey } = action.payload
             const itemWithUpdatedFetchBody = state[itemKey]
@@ -81,7 +85,7 @@ const diagnosticReducer = (state={}, action) => {
             })
             return Object.assign({}, state, callsUpdatedWithResponseInformation)
 
-            return state
+            
         case ERROR:
             const { error, data } = action.payload
             return Object.assign({}, state, {error, data})

@@ -5,12 +5,15 @@ import { Provider } from 'react-redux'
 
 import './index.css';
 import DiagnosticContainer from './containers/DiagnosticContainer';
+import ErrorBoundary from './components/ErrorBoundary'
 import * as serviceWorker from './serviceWorker';
 import store from './reducers'
 
 ReactDOM.render(
     <Provider store={store}>
-        <DiagnosticContainer />
+        <ErrorBoundary>
+            <DiagnosticContainer />
+        </ErrorBoundary>
     </Provider>, 
 document.getElementById('root'));
 

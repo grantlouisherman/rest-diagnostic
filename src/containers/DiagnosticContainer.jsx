@@ -8,7 +8,7 @@ const DiagnosticContainer = props => {
   const [isDiagnosedCallView, setDiagnosedCallView] = useState(false)
   const [diagnosedCalls, setDiagnosedCalls] = useState({})
   const [isDiagnosticContentLoaded, setDiagnosticContentLoaded] = useState(false)
-
+  const [isError, setError] = useState(false)
   const runCallDiagnostic = async () => {
     await props.diagnosticHandler(props.diagnosticContent)
     setDiagnosedCallView(true)
@@ -17,7 +17,11 @@ const DiagnosticContainer = props => {
 
   const fileUpload = (event) => {
     const fileReader = new FileReader()
-    fileReader.onloadend = (evt) => ( props.uploadFiled(fileReader) )
+    try{
+      fileReader.onloadend = (evt) => ( props.uploadFiled(fileReader) )
+    }catch(err){
+      setError(true)
+    }
     fileReader.readAsText(event.target.files[0])
     setDiagnosticContentLoaded(true)
   }
@@ -27,8 +31,12 @@ const DiagnosticContainer = props => {
     setDiagnosticContentLoaded(false)
   }
 
-    return (
+  if(props.diagnosticContent.error || isError){
+    return <h1>Something went wrong.</h1>
+  }
 
+    return (
+ 
       <div>
       {
         isDiagnosticContentLoaded ?
