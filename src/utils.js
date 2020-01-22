@@ -19,8 +19,15 @@ export const shouldConstructFetchRequest = async (method, headers, query, url, c
     headers,
     body
   }
-  const fetchRequest = await fetch(url, options)
-  const fetchRequestJson = await fetchRequest.json()
+  let fetchRequest;
+  let fetchRequestJson;
+  try {
+    fetchRequest = await fetch(url, options)
+    fetchRequestJson = await fetchRequest.json()
+  }catch(err){
+    throw new Error("Fetch Call failed", err)
+  }
+  
   const responseBody = deconstructResponse(fetchRequestJson)
   return {
       status: fetchRequest.status,
@@ -31,12 +38,13 @@ export const shouldConstructFetchRequest = async (method, headers, query, url, c
 }
 
 export const DiagnoseCalls = calls => {
+  
   const callStack = []
-  const callStackKeys = Object.keys(calls).map(callKey => calls[callKey])
-  callStackKeys.forEach( callStackKey => {
-    const { method, headers, body, url, id } = callStackKey
+  for(let callKey in calls){
+    const { method, headers, body, url, id } = calls[callKey]
     callStack.push(shouldConstructFetchRequest(method, headers, body, url, id))
-  })
+  }
+  
   return Promise.all(callStack)
   .then(calls => calls )
   .catch(console.error)

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { uploadFiled, updateFetchBody, diagnosticHandler } from '../reducers/diagnostic'
+import { diagnosticHandler } from '../reducers/diagnostic'
+import { uploadFiled } from '../reducers/file'
 
 import ItemToDiagnose from '../components/ItemToDiagnose'
 
@@ -8,20 +9,17 @@ const DiagnosticContainer = props => {
   const [isDiagnosedCallView, setDiagnosedCallView] = useState(false)
   const [diagnosedCalls, setDiagnosedCalls] = useState({})
   const [isDiagnosticContentLoaded, setDiagnosticContentLoaded] = useState(false)
-  const [isError, setError] = useState(false)
+
+  console.log(props.diagnosticContent)
   const runCallDiagnostic = async () => {
-    await props.diagnosticHandler(props.diagnosticContent)
+    await props.diagnosticHandler(props.fileContent)
     setDiagnosedCallView(true)
-    setDiagnosedCalls({ ...diagnosedCalls })
+    setDiagnosedCalls({ ...props.diagnosticContent })
   }
 
   const fileUpload = (event) => {
     const fileReader = new FileReader()
-    try{
-      fileReader.onloadend = (evt) => ( props.uploadFiled(fileReader) )
-    }catch(err){
-      setError(true)
-    }
+    fileReader.onloadend = (evt) => ( props.uploadFiled(fileReader) )
     fileReader.readAsText(event.target.files[0])
     setDiagnosticContentLoaded(true)
   }
@@ -31,8 +29,8 @@ const DiagnosticContainer = props => {
     setDiagnosticContentLoaded(false)
   }
 
-  if(props.diagnosticContent.error || isError){
-    return <h1>Something went wrong.</h1>
+  if(props.diagnosticContent.error){
+    throw new Error('You tried to upload a bad file!');
   }
 
     return (
@@ -40,10 +38,10 @@ const DiagnosticContainer = props => {
       <div>
       {
         isDiagnosticContentLoaded ?
-        Object.keys(props.diagnosticContent).map((apiCallKey, idx) => (
+        Object.keys(props.fileContent).map((apiCallKey, idx) => (
           <div className="ui grid">
             <ItemToDiagnose
-              key={`idx-${setDiagnosedCallView}`}
+              key={`idx-${apiCallKey}`}
               index={apiCallKey}
               isDiagnosedCallView={isDiagnosedCallView}
             />
@@ -51,8 +49,8 @@ const DiagnosticContainer = props => {
         ))
         :
         <div className="ui placeholder segment">
-            <div class="ui icon header">
-              <i class="file outline icon"></i>
+            <div className="ui icon header">
+              <i className="file outline icon"></i>
                 Please Upload Instructions
               </div>
               <div className="ui primary button">
@@ -80,9 +78,10 @@ const DiagnosticContainer = props => {
 
 
 const mapStateToProps = state => {
-  const { diagnostic } = state
+  const { diagnostic, file } = state
   return {
-    diagnosticContent: diagnostic
+    diagnosticContent: diagnostic,
+    fileContent: file
   }
 }
-export default connect(mapStateToProps, { uploadFiled, updateFetchBody, diagnosticHandler })(DiagnosticContainer)
+export default connect(mapStateToProps, { uploadFiled, diagnosticHandler })(DiagnosticContainer)

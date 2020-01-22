@@ -1,8 +1,8 @@
 ---
 calls:
   - headers: !!map {"Content-Type": "application/json"}
-    "url": "http://localhost:8080/posts"
+    "url": "http://localhost:8080/comments"
     "method": "GET"
   - headers: !!map {"Content-Type": "application/json"}
-    "url": "http://localhost:8080/posts"
+    "url": "http://localhost:8080/comments"
     "method": "GET"

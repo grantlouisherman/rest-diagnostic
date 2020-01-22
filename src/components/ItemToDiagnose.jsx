@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import MethodSelectTag from './MethodSelectTag'
-import { updateFetchBody } from '../reducers/diagnostic'
+import { updateFetchBody } from '../reducers/file'
 import Icon from "./Icon";
 
 const ItemToDiagnose = (props) => {
-  const currentItem = props.diagnosticItems[props.index]
+  const currentItem = props.fileItems[props.index]
   const { updateFetchBody } = props
   const onChangeFetchBody = event => {
     const keyToUpdate = event.target.id.split('-')[0]
@@ -50,18 +50,23 @@ const ItemToDiagnose = (props) => {
         />
       </div>
     </div>
+    {
+      props.diagnosticContent[props.index] &&
       <div className="space-internal">
         <label className="ui horizontal label"> status of call </label>
-        <Icon responseStaus={currentItem.status} />
-      </div>
+        <Icon responseStaus={props.diagnosticContent[props.index].status} />
+     </div>
+    }
+   
   </div>
   )
 }
 
 const mapStateToProps = state => {
-  const { diagnostic } = state
+  const { diagnostic, file } = state
   return {
-    diagnosticItems: diagnostic
+    diagnosticContent: diagnostic,
+    fileItems: file
   }
 }
 export default connect(mapStateToProps, { updateFetchBody })(ItemToDiagnose)
